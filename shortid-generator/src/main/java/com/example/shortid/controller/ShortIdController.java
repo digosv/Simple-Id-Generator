@@ -1,5 +1,6 @@
 package com.example.shortid.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ public class ShortIdController
     private final Random random = new Random();
 
     // Rota de Get
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/generate")
     public String generateShortId(@RequestParam(defaultValue = "6") int size){
         StringBuilder id = new StringBuilder();

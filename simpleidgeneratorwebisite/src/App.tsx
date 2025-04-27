@@ -1,33 +1,66 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { Link } from "lucide-react";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [size, setSize] = useState(6);
+  const [shortID, setShortId] = useState("");
+
+  const handlGenerate = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/generate?size=${size}`
+      );
+      const text = await response.text();
+      setShortId(text);
+    } catch (error) {
+      console.log("Erro ao Gerar ID:", error);
+    }
+  };
 
   return (
-    <div>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app-container">
+      <header className="header">
+        <div className="h1-link">
+          <Link className="link" />
+          <h1>Simple ID Generator</h1>
+        </div>
+        <h3>Uma API simples e rápida para gerar IDs únicos </h3>
+      </header>
+      <div className="containersup">
+        <div className="container">
+          <p>
+            <label htmlFor="">Simple ID Generator</label> é uma API simples para
+            geração de IDs. Há uma probabilidade de IDs duplicados mas ela é
+            extremamente baixa.
+          </p>
+          <p>O tamanho do ID pode ser modificado pelo usuario da API</p>
+        </div>
+        <div className="controls">
+          <label className="sizeid" htmlFor="size">
+            Tamanho do ID:
+            <p className="p">{size}</p>
+          </label>
+          <input
+            className="input"
+            type="range"
+            value={size}
+            min="1"
+            max="36"
+            id="size"
+            onChange={(e) => setSize(Number(e.target.value))}
+          />
+          <button className="button" onClick={handlGenerate}>
+            Gerar
+          </button>
+        </div>
+        {shortID && (
+          <div className="result">
+            <p>ID Gerado:</p>
+            <code>{shortID}</code>
+          </div>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   );
 }
