@@ -17,7 +17,7 @@ public class ShortIdController
 
     // Rota de Get
     @CrossOrigin(origins = {"http://localhost:5173",
-    "https://simple-id-generator.vercel.app/"})
+    "https://simple-id-generator.vercel.app"})
 
     @GetMapping("/generate")
     public String generateShortId(@RequestParam(defaultValue = "6") int size){
