@@ -16,7 +16,9 @@ public class ShortIdController
     private final Random random = new Random();
 
     // Rota de Get
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = {"http://localhost:5173",
+    "https://simple-id-generator.vercel.app/"})
+
     @GetMapping("/generate")
     public String generateShortId(@RequestParam(defaultValue = "6") int size){
         StringBuilder id = new StringBuilder();
